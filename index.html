@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagina Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0}body{display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Poppins'}.content{display:grid;text-align:center}h1{margin:10px}.form-group{margin-bottom:10px;text-align:left}label{display:inline-block;width:120px}input[type="text"],input[type="date"],select{width:200px;padding:5px}button{padding:5px 10px;background-color:#4CAF50;color:white;border:none;cursor:pointer;transition:background-color .3s}button:hover{background-color:#45a049}.tooltip{position:relative;display:inline-block}.tooltip .tooltiptext{visibility:hidden;width:120px;background-color:#555;color:#fff;text-align:center;border-radius:6px;padding:5px;position:absolute;z-index:1;bottom:110%;left:50%;margin-left:-60px;opacity:0;transition:opacity .3s}.tooltip .tooltiptext::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border-width:5px;border-style:solid;border-color:#555 transparent transparent transparent}.tooltip:hover .tooltiptext{visibility:visible;opacity:1}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Titulo contrato</h1>
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" id="inputNome">
+            <div class="tooltip">
+                <button onclick="copyText('inputNome')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>CPF:</label>
+            <input type="text" id="inputCPF">
+            <div class="tooltip">
+                <button onclick="copyText('inputCPF')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Numero:</label>
+            <input type="text" id="inputNumero">
+            <div class="tooltip">
+                <button onclick="copyText('inputNumero')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Dt Nasc.:</label>
+            <input type="date" id="inputDataNascimento">
+            <div class="tooltip">
+                <button onclick="copyText('inputDataNascimento')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Nome da mãe:</label>
+            <input type="text" id="inputNomeMae">
+            <div class="tooltip">
+                <button onclick="copyText('inputNomeMae')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Estado Civil:</label>
+            <input type="text" id="inputEstadoCivil">
+            <div class="tooltip">
+                <button onclick="copyText('inputEstadoCivil')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>E-mail:</label>
+            <input type="text" id="inputEmail">
+            <div class="tooltip">
+                <button onclick="copyText('inputEmail')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>CEP:</label>
+            <input type="text" id="inputCEP">
+            <div class="tooltip">
+                <button onclick="copyText('inputCEP')">Copiar</button>
+                <span class="tooltiptext">Copiar conteúdo</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Complemento</label>
+            <select>
+                <option>Casa</option>
+                <option>Apartamento</option>
+                <option>Outros:</option>
+            </select>
+        </div>
+        <button onclick="saveToPDF()">Salvar</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+        <script>
+            function copyText(inputId) {
+                const inputField = document.getElementById(inputId);
+                inputField.select();
+                document.execCommand("copy");
+            }
+            function saveToPDF() {
+                const doc = new jsPDF();
+                const formGroups = document.querySelectorAll('.form-group');
+                let yOffset = 20;
+                for (const formGroup of formGroups) {
+                    const label = formGroup.querySelector('label').innerText;
+                    const input = formGroup.querySelector('input, select').value;
+                    doc.text(20, yOffset, label + ': ' + input);
+                    yOffset += 10;
+                }
+                doc.save('contract_information.pdf');
+            }
+        </script>
+    </div>
+</body>
+</html>
