@@ -82,26 +82,39 @@
                 <option>Outros:</option>
             </select>
         </div>
-        <button onclick="saveToPDF()">Salvar</button>
+       	<button onclick="saveToPDF()">Salvar</button>
+        <button onclick="limparCampos()">Limpar</button>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
         <script>
-            function copyText(inputId) {
-                const inputField = document.getElementById(inputId);
-                inputField.select();
-                document.execCommand("copy");
+          function copyText(inputId) {
+            const inputField = document.getElementById(inputId);
+            inputField.select();
+            document.execCommand("copy");
+        }
+
+        function saveToPDF() {
+            const doc = new jsPDF();
+            const formGroups = document.querySelectorAll('.form-group');
+            let yOffset = 20;
+            for (const formGroup of formGroups) {
+                const label = formGroup.querySelector('label').innerText;
+                const input = formGroup.querySelector('input, select').value;
+                doc.text(20, yOffset, label + ': ' + input);
+                yOffset += 10;
             }
-            function saveToPDF() {
-                const doc = new jsPDF();
-                const formGroups = document.querySelectorAll('.form-group');
-                let yOffset = 20;
-                for (const formGroup of formGroups) {
-                    const label = formGroup.querySelector('label').innerText;
-                    const input = formGroup.querySelector('input, select').value;
-                    doc.text(20, yOffset, label + ': ' + input);
-                    yOffset += 10;
-                }
-                doc.save('contract_information.pdf');
-            }
+            doc.save('contract_information.pdf');
+        }
+
+        function limparCampos() {
+            document.getElementById('inputNome').value = '';
+            document.getElementById('inputCPF').value = '';
+            document.getElementById('inputNumero').value = '';
+            document.getElementById('inputDataNascimento').value = '';
+            document.getElementById('inputNomeMae').value = '';
+            document.getElementById('inputEstadoCivil').value = '';
+            document.getElementById('inputEmail').value = '';
+            document.getElementById('inputCEP').value = '';
+        }
         </script>
     </div>
 </body>
